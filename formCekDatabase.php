@@ -24,9 +24,13 @@ $privatekey = "6LcsyXUUAAAAACdaj3rkl4FFSJy0sTcuJYlJyfEU";
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <title>Cek koneksi Database dari <?=$_SERVER['SERVER_NAME']?></title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-theme.min.css">
     <style type="text/css">
         body {padding: 20px;}
         fieldset, legend {border: 1px solid #ccc; font-size: 14px;}
@@ -34,6 +38,10 @@ $privatekey = "6LcsyXUUAAAAACdaj3rkl4FFSJy0sTcuJYlJyfEU";
         legend {text-align: left; background-color: #ccc; font-weight: bold; overflow: hidden; padding: 2px 5px; width: 50%; }
         fieldset input {width: 100%; padding: 2px 4px;}
         form fieldset { width: 45%; }
+        .g-recaptcha {
+          transform-origin: left top;
+          -webkit-transform-origin: left top;
+        }
     </style>
 </head>
 <body>
@@ -193,6 +201,44 @@ $privatekey = "6LcsyXUUAAAAACdaj3rkl4FFSJy0sTcuJYlJyfEU";
         <input type="submit" name="cek" value="CEK" class="btn-submit">
     </fieldset>
 </form>
+
+<script type="text/javascript">
+// Resize reCAPTCHA to fit width of container
+// Since it has a fixed width, we're scaling
+// using CSS3 transforms
+// ------------------------------------------
+// captchaScale = containerWidth / elementWidth
+
+function scaleCaptcha(elementWidth) {
+  // Width of the reCAPTCHA element, in pixels
+  var reCaptchaWidth = 400;
+  // Get the containing element's width
+    var containerWidth = $('.container').width();
+  
+  // Only scale the reCAPTCHA if it won't fit
+  // inside the container
+  if(reCaptchaWidth > containerWidth) {
+    // Calculate the scale
+    var captchaScale = containerWidth / reCaptchaWidth;
+    // Apply the transformation
+    $('.g-recaptcha').css({
+      'transform':'scale('+captchaScale+')'
+    });
+  }
+}
+
+$(function() { 
+ 
+  // Initialize scaling
+  scaleCaptcha();
+  
+  // Update scaling on window resize
+  // Uses jQuery throttle plugin to limit strain on the browser
+  $(window).resize( $.throttle( 100, scaleCaptcha ) );
+  
+});    
+</script>
+
 <? } ?>
 </body>
 </html>
