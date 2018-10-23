@@ -2,8 +2,12 @@
 error_reporting(1);
 $token = md5(md5(date('YmdHis')));
 // echo $token;
-$whiteIP = file_get_contents('whiteIP.nug', FILE_USE_INCLUDE_PATH);
-$ips = explode(PHP_EOL, $whiteIP);
+
+if(is_file('whiteIP.nug'))
+{
+    $whiteIP = file_get_contents('whiteIP.nug', FILE_USE_INCLUDE_PATH);
+    $ips = explode(PHP_EOL, $whiteIP);
+}
 // print_r($ips);
 // print_r($_SERVER['REMOTE_ADDR']);
 
@@ -196,7 +200,7 @@ $privatekey = "6LcsyXUUAAAAACdaj3rkl4FFSJy0sTcuJYlJyfEU";
     <fieldset class="col-md-4">
         <legend>DATABASE</legend> <input type="text" name="database" value="<?=$_POST['database']?>">
     </fieldset>
-    <fieldset class="col-md-4">
+    <fieldset class="col-md-6">
         <div class="g-recaptcha" data-sitekey="<?=$publickey?>"></div>
         <input type="submit" name="cek" value="CEK" class="btn-submit">
     </fieldset>
